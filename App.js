@@ -5,7 +5,7 @@ import OneSignal from 'react-native-onesignal';
 import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import 'moment/src/locale/pt';
-
+import { InteractionManager } from 'react-native';
 // Locals
 import { setTopLevelNavigator, configurationGeoLocation } from '~/helpers';
 
@@ -16,8 +16,15 @@ import { registerInterceptors, addOneSignalEvents } from '~/config';
 import store from './src/store';
 import {
   handleLocationUpdate,
-  BACKGROUND_LOCATION_UPDATES_TASK
+  BACKGROUND_LOCATION_UPDATES_TASK,
+  backgroundconfigure,
+  backgroundconfigureEvents
 } from '~/helpers';
+
+// BackgroundTask.define(() => {
+//   console.log('Hello from a background task');
+//   BackgroundTask.finish();
+// });
 
 export default class App extends React.Component {
   constructor() {
@@ -28,55 +35,8 @@ export default class App extends React.Component {
   async componentDidMount() {
     try {
       configurationGeoLocation(store);
-      // BackgroundGeolocation.configure({
-      //   desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
-      //   stationaryRadius: 50,
-      //   distanceFilter: 50,
-      //   notificationTitle: 'Background tracking',
-      //   notificationText: 'enabled',
-      //   debug: true,
-      //   startForeground: true,
-      //   startOnBoot: false,
-      //   stopOnTerminate: true,
-      //   locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-      //   interval: 1000,
-      //   fastestInterval: 5000,
-      //   activitiesInterval: 10000,
-      //   url: 'http://192.168.81.15:3000/location',
-      //   httpHeaders: {
-      //     'X-FOO': 'bar'
-      //   },
-      //   // customize post properties
-      //   postTemplate: {
-      //     lat: '@latitude',
-      //     lon: '@longitude',
-      //     foo: 'bar' // you can also add your own properties
-      //   }
-      // });
-      // console.log();
-      // // BackgroundGeolocation.configure();
-
-      // BackgroundGeolocation.on('location', () => {
-      //   console.log('[INFO] App is in background');
-      // });
-      // BackgroundGeolocation.checkStatus(status => {
-      //   console.log(
-      //     '[INFO] BackgroundGeolocation service is running',
-      //     status.isRunning
-      //   );
-      //   console.log(
-      //     '[INFO] BackgroundGeolocation services enabled',
-      //     status.locationServicesEnabled
-      //   );
-      //   console.log(
-      //     '[INFO] BackgroundGeolocation auth status: ' + status.authorization
-      //   );
-
-      //   // you don't need to check status before start (this is just the example)
-      //   if (!status.isRunning) {
-      //     BackgroundGeolocation.start(); //triggers start on start event
-      //   }
-      // });
+      backgroundconfigure();
+      backgroundconfigureEvents(store);
     } catch (e) {
       console.log(e);
     }

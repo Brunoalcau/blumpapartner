@@ -110,7 +110,8 @@ ServiceInfo.propTypes = {
   cancel: func,
   checkin: func,
   visible: bool,
-  checkout: func
+  checkout: func,
+  going: func
 };
 
 const WrapperInfo = styled.View`

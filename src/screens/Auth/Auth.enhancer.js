@@ -34,7 +34,6 @@ export const enhancer = compose(
 			// };
 			// await loadImages(images);
 			// .forEach(e => );
-			console.log(this.props);
 			await this.props.getRoom();
 			const token = await AsyncStorage.getItem('userToken');
 			const user = await AsyncStorage.getItem('user');

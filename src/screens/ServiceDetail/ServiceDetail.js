@@ -1,5 +1,5 @@
 import React from 'react';
-import {object, bool, func} from 'prop-types';
+import { object, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import withRematch from 'with-rematch';
 import Immutable from 'seamless-immutable';
@@ -29,7 +29,7 @@ const model = {
     openConfirm(payload) {
       actions.visible(payload);
     },
-    async cancel(payload, state, {onCancel}) {
+    async cancel(payload, state, { onCancel }) {
       try {
         await onCancel(payload);
         actions.visible(false);
@@ -41,7 +41,7 @@ const model = {
 };
 
 export const ServiceDetail = withRematch(model)(
-  ({item, visible, checkin, actions, state, navigation}) => (
+  ({ item, visible, checkin, actions, state, navigation, going, checkout }) => (
     <Wrapper>
       <TopBar title="Serviço" leftComponent={<BackButton />} />
       <Content loading={visible}>
@@ -50,6 +50,8 @@ export const ServiceDetail = withRematch(model)(
           cancel={() => actions.openConfirm(true)}
           checkin={checkin}
           navigation={navigation}
+          going={going}
+          checkout={checkout}
         />
       </Content>
 
@@ -71,7 +73,9 @@ ServiceDetail.propTypes = {
   onCancel: func,
   checkin: func,
   state: object,
-  actions: object
+  actions: object,
+  going: func,
+  checkout: func
 };
 
 const Content = styled(Wrapper)`

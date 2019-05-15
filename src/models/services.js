@@ -9,7 +9,13 @@ import { AsyncStorage } from 'react-native';
 // Locals
 import { serviceApi } from '~/api';
 import { apiUrl } from '~/config';
-import { toast, goBack } from '~/helpers';
+import {
+  toast,
+  goBack,
+  getCurrentLocation,
+  backgroundStart,
+  backgroundStop
+} from '~/helpers';
 
 const initialState = Immutable({
   items: [],
@@ -129,16 +135,19 @@ const services = {
     },
     async checkin(payload, state) {
       try {
-        // const { coords } = await Location.getCurrentPositionAsync();
-        // const service = {
-        //   ...payload,
-        //   latitude: coords.latitude,
-        //   longitude: coords.longitude,
-        //   timestamp: moment().unix()
-        // };
-        // const data = await serviceApi.checkin(service);
-        // dispatch.services.acceptSuccess(data, service);
-        // toast.show({ text: data.message, type: 'success' });
+        const location = await getCurrentLocation();
+        const service = {
+          ...payload,
+          latitude: location.latitude,
+          longitude: location.longitude,
+          timestamp: moment().unix()
+        };
+        const data = await serviceApi.checkin(service);
+        dispatch.services.acceptSuccess(
+          { data, serviceId: service.work_ticket_id, startLocation: false },
+          service
+        );
+        toast.show({ text: data.message, type: 'success' });
       } catch (e) {
         toast.show({
           text: 'Ocorreu algum problema tente novamente',
@@ -150,26 +159,30 @@ const services = {
       try {
         const data = await serviceApi.going(payload);
         dispatch.services.goingSuccess(payload, {
-          work_ticket_id: payload
+          work_ticket_id: payload,
+          startLocation: true
         });
       } catch (e) {
-        console.log(e.message);
+        console.log(e);
         toast.show({
-          text: 'Ocorreu algum problema tente novamente',
+          text: 'Ocorreu algum problema tente novamentexddd',
           type: 'danger'
         });
       }
     },
     async checkout(payload) {
       try {
-        const { coords } = await Location.getCurrentPositionAsync();
+        const location = await getCurrentLocation();
         const data = await serviceApi.checkout({
           ...payload,
-          latitude: coords.latitude,
-          longitude: coords.longitude,
+          latitude: location.latitude,
+          longitude: location.longitude,
           timestamp: moment().unix()
         });
-        dispatch.services.checkoutSuccess(data);
+        dispatch.services.checkoutSuccess(data, {
+          ...payload
+        });
+
         toast.show({ text: data.message, type: 'success' });
       } catch (e) {
         console.log(e);
@@ -201,8 +214,19 @@ const services = {
       type: ['services/acceptSuccess', 'services/setCancel'],
       latest: true,
       async process({ action }, dispatch, done) {
+        // console.log(action);
+
+        if (action.meta) {
+          await dispatch.service.get(action.meta.work_ticket_id, {
+            loading: { visible: true }
+          });
+          if (!action.meta.startLocation) {
+            backgroundStop();
+          }
+        }
         await dispatch.services.find();
         await dispatch.next.get();
+
         await dispatch.schedule.getNext();
         await dispatch.schedule.getHistory();
         dispatch.services.confirmModalServiceOpen(false);
@@ -236,20 +260,30 @@ const services = {
       async process({ action }, dispatch, done) {
         const { meta } = action;
         if (meta) {
-          await AsyncStorage.setItem('serviceId', `${meta.work_ticket_id}`);
-          // initializeBackgroundLocation();
+          const { work_ticket_id, startLocation } = action.meta;
+          await AsyncStorage.setItem('serviceId', `${work_ticket_id}`);
+          backgroundStart();
         }
         dispatch.next.get();
+        dispatch.service.get(meta.work_ticket_id, {
+          loading: { visible: true }
+        });
         done();
       }
     },
     {
       type: 'services/checkoutSuccess',
       latest: true,
-      async process(context, dispatch, done) {
-        console.log('context');
+      async process({ action }, dispatch, done) {
+        const { meta } = action;
         await AsyncStorage.setItem('serviceId', '');
         dispatch.next.get();
+        if (meta) {
+          dispatch.service.get(meta.work_ticket_id, {
+            loading: { visible: true }
+          });
+        }
+
         done();
       }
     }
