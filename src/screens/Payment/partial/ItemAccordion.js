@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {object} from 'prop-types';
+import { object } from 'prop-types';
 import moment from 'moment';
 import {
   ListItem,
@@ -12,21 +12,19 @@ import {
 } from 'native-base';
 
 // Locals
-import {Text} from '~/commons';
-import {money} from '~/helpers';
+import { Text } from '~/commons';
+import { money } from '~/helpers';
 
-export const ItemAccordion = ({item, title}) => {
+export const ItemAccordion = ({ item, title }) => {
   return (
     <WrapperCard>
       <If condition={item.header}>
         <HeaderItem itemDivider>
-          <Left />
-          <WrapperItem style={{marginRight: 40}}>
+          <WrapperItem>
             <Text size={13} weight="bold">
-              {item.send_date} - R$: {money(item.total, 2)}
+              {item.send_date} - R$: {item.total}
             </Text>
           </WrapperItem>
-          <Right />
         </HeaderItem>
       </If>
       <If condition={!item.header}>
@@ -36,7 +34,7 @@ export const ItemAccordion = ({item, title}) => {
               {moment(item.send_date).format('DD/MM/YYYY')} -
             </Text>
             <Text size={13} secondary weight="bold">
-              R$ {money(item.amount_cents, 2)}
+              R$ {(item.amount_cents, 2)}
             </Text>
           </WrapperSubItem>
         </BodyItem>
@@ -58,9 +56,7 @@ const HeaderItem = styled(ListItem)`
 const BodyItem = styled(ListItem)`
   margin-left: 0;
 `;
-const WrapperItem = styled(BodyNative)`
-  margin-right: 40;
-`;
+const WrapperItem = styled(BodyNative)``;
 
 const WrapperSubItem = styled(BodyNative)`
   flex: 1;

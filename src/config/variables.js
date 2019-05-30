@@ -6,4 +6,4 @@ export const urlManual = __DEV__
 	? 'https://blumpa.com/assets/manual.json'
 	: 'https://blumpa.com/assets/manual.json';
 
-export const apiKeyOneSignal = 'd7df3d92-6007-4092-b21e-986546085427';
+export const apiKeyOneSignal = '36c3f82e-e32c-40ce-8864-bddb3405edc1';

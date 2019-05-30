@@ -1,13 +1,13 @@
 import React from 'react';
-import {Item, Input as InputNative} from 'native-base';
+import { Item, Input as InputNative } from 'native-base';
 import styled from 'styled-components';
-import {string, func, bool} from 'prop-types';
+import { string, func, bool } from 'prop-types';
 import DatePicker from 'react-native-datepicker';
 
 // Local
-import {Text} from '../Text';
-import {TextInputMask} from '../TextInputMask';
-import {theme} from '~/config';
+import { Text } from '../Text';
+import { TextInputMask } from '../TextInputMask';
+import { theme } from '~/config';
 export const InputField = ({
   label,
   onChangeText,
@@ -30,6 +30,18 @@ export const InputField = ({
         </Label>
       </If>
       <Choose>
+        <When condition={type === 'password'}>
+          <WrapperItem rounded error={!!validationMessage} height={height}>
+            <Input
+              secureTextEntry={true}
+              onChangeText={onChangeText}
+              value={value}
+              onBlur={handleBlur}
+              autoCapitalize={autoCapitalize}
+              placeholder={placeholder}
+            />
+          </WrapperItem>
+        </When>
         <When condition={type === 'text'}>
           <WrapperItem rounded error={!!validationMessage} height={height}>
             <Input
@@ -37,8 +49,8 @@ export const InputField = ({
               onChangeText={onChangeText}
               value={value}
               onBlur={handleBlur}
-              autoCapitalize={autoCapitalize}
               placeholder={placeholder}
+              {...props}
             />
           </WrapperItem>
         </When>
@@ -58,7 +70,7 @@ export const InputField = ({
         </When>
         <When condition={type === 'date-picker'}>
           <DatePicker
-            style={{width: '100%'}}
+            style={{ width: '100%' }}
             onDateChange={onChangeText}
             customStyles={{
               dateInput: {
@@ -98,7 +110,9 @@ InputField.propTypes = {
 const Label = styled(Text)`
   padding-vertical: 2;
 `;
-const Wrapper = styled.View``;
+const Wrapper = styled.View`
+  padding-vertical: 5;
+`;
 
 const ValidationMessage = styled(Text)`
   color: ${props => props.theme.danger};

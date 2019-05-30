@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {oneOfType, element, string, bool} from 'prop-types';
-import {compose, pure, setPropTypes, withProps} from 'recompose';
-import {isNumber} from 'lodash';
+import { oneOfType, element, string, bool } from 'prop-types';
+import { compose, pure, setPropTypes, withProps } from 'recompose';
+import { isNumber } from 'lodash';
 import {
   Header as HeaderNative,
   Left as LeftNative,
@@ -11,8 +11,8 @@ import {
 } from 'native-base';
 
 // locals
-import {StatusBarBackground} from '../StatusBarBackground';
-import {Text} from '../Text';
+import { StatusBarBackground } from '../StatusBarBackground';
+import { Text } from '../Text';
 
 export const TopBar = compose(
   setPropTypes({
@@ -21,32 +21,32 @@ export const TopBar = compose(
     title: string,
     logo: bool
   }),
-  withProps(({notEmpty}) => ({
+  withProps(({ notEmpty }) => ({
     notEmpty: isNumber(notEmpty) ? notEmpty : true
   })),
   pure
-)(({leftComponent, title, logo, rightComponent, notEmpty}) => (
-  <Header>
-    <Choose>
-      <When condition={leftComponent}>
-        <Left>{leftComponent}</Left>
-      </When>
-      <When condition={!leftComponent}>
-        <Left />
-      </When>
-    </Choose>
-    <Body>
-      <Text weight="bold">{title}</Text>
-    </Body>
-    <Choose>
-      <When condition={rightComponent}>
-        <Right>{rightComponent}</Right>
-      </When>
-      <When condition={!rightComponent}>
-        <Right />
-      </When>
-    </Choose>
-  </Header>
+)(({ leftComponent, title, logo, rightComponent, notEmpty }) => (
+  <MainWrapper>
+    <Header>
+      <Choose>
+        <When condition={leftComponent}>
+          <Left>{leftComponent}</Left>
+        </When>
+        <When condition={!leftComponent} />
+      </Choose>
+      <Body>
+        <Text weight="bold" align="center">
+          {title}
+        </Text>
+      </Body>
+      <Choose>
+        <When condition={rightComponent}>
+          <Right>{rightComponent}</Right>
+        </When>
+        <When condition={!rightComponent} />
+      </Choose>
+    </Header>
+  </MainWrapper>
 ));
 
 const MainWrapper = styled.View`
@@ -57,9 +57,8 @@ const Header = styled(HeaderNative)`
   background-color: ${props => props.theme.bgSecondary};
 `;
 
-const Body = styled(BodyNative)`
-  flex: 2;
-`;
+const Body = styled(BodyNative)``;
+
 const Left = styled(LeftNative)`
   padding-left: 9;
 `;

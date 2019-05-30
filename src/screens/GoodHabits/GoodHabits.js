@@ -52,7 +52,7 @@ const WrapperText = styled.View`
   padding-right: 10;
   padding-top: 10;
   padding-bottom: 10;
-  line-height: 50;
+  line-height: 30;
 `;
 
 const Image = styled(ImageNative)`

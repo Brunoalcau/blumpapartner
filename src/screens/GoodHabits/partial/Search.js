@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Icon} from 'native-base';
-import {string, func, bool} from 'prop-types';
+import { Icon } from 'native-base';
+import { string, func, bool } from 'prop-types';
 import withRematch from 'with-rematch';
 
 // Locals
-import {InputField, Button} from '~/commons';
+import { InputField, Button } from '~/commons';
 
-export const Search = ({value, onChangeText, clear}) => (
+export const Search = ({ value, onChangeText, clear }) => (
   <Wrapper>
     <InputField
       onChangeText={onChangeText}
@@ -38,11 +38,10 @@ const Wrapper = styled.View`
 `;
 
 const WrapperIcon = styled(Icon)`
+  top: 22;
   font-size: 18;
-  top: 16;
   right: 16;
   position: absolute;
   color: ${props => props.theme['border']};
   padding-left: 15;
 `;
-

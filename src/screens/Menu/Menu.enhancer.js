@@ -3,6 +3,6 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = ({ application }) => ({
 	user: application.user,
-	channel: application.channel
+	channel: application.roomId
 });
 export const enhancer = compose(connect(mapStateToProps));

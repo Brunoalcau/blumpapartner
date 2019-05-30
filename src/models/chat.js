@@ -6,7 +6,8 @@ import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 import moment from 'moment';
 import randomstring from 'random-string';
 import { pickBy, identity } from 'lodash';
-
+import ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 // Locals
 import { apiUrl } from '~/config';
 
@@ -69,6 +70,7 @@ const chat = {
 			});
 		},
 		currentAttachment(state, payload) {
+			console.log(payload);
 			return state.merge({
 				currentAttachment: payload
 			});
@@ -91,9 +93,7 @@ const chat = {
 	},
 	effects: dispatch => ({
 		async initConfiguration({ user, channel }, state, props) {
-			console.log(channel);
 			try {
-				// await axios.post(`http://localhost:3000/users`, { username: user });
 				this.currentUser = await initConfiguration(user);
 				const onReceiveMessage = message => {
 					dispatch.chat.messages({
@@ -106,13 +106,12 @@ const chat = {
 				};
 				const room = await this.currentUser.subscribeToRoom({
 					roomId: channel.toString(),
-					customData: { a: 1 },
 					hooks: {
 						onMessage: message => onReceiveMessage(message),
 						onUserStartedTyping: console.log,
 						onUserStoppedTyping: console.log
 					},
-					messageLimit: 10
+					messageLimit: 20
 				});
 				const rooms = await this.currentUser.getJoinableRooms();
 				dispatch.chat.channel(channel);
@@ -125,8 +124,7 @@ const chat = {
 				const msg = {
 					text: message.text,
 					roomId: state.chat.channel.toString(),
-					attachment: state.chat.currentAttachment,
-					customData: { a: 2 }
+					attachment: state.chat.currentAttachment
 				};
 				const currentMessageId = await this.currentUser.sendMessage(
 					pickBy(msg, identity)
@@ -141,46 +139,53 @@ const chat = {
 				...state.chat.messages.map(m => parseInt(m.key))
 			);
 		},
-		openMenu(context, state) {
-			// ActionSheet.show(
-			// 	{
-			// 		options: state.chat.buttons,
-			// 		cancelButtonIndex: state.chat.cancelIndex
-			// 	},
-			// 	// TODO: Melhoria
-			// 	async buttonIndex => {
-			// 		if (buttonIndex === 0) {
-			// 			// TODO: Create method to user
-			// 			// const PERMISSIONS_STATUS_OK = 'granted';
-			// 			// const { status } = await Permissions.askAsync(
-			// 				Permissions.CAMERA_ROLL
-			// 			);
-			// 			if (status === PERMISSIONS_STATUS_OK) {
-			// 				const result = await ImagePicker.launchImageLibraryAsync({
-			// 					allowsEditing: false,
-			// 					aspect: [4, 3]
-			// 				});
-			// 				if (!result.cancelled) {
-			// 					const filename = `${randomstring()}.png`;
-			// 					const manipResult = await ImageManipulator.manipulateAsync(
-			// 						result.uri,
-			// 						[],
-			// 						{ compress: 0 }
-			// 					);
-			// 					const msg = {
-			// 						file: {
-			// 							name: `${filename}`,
-			// 							type: 'image/jpeg',
-			// 							uri: manipResult.uri
-			// 						},
-			// 						name: `${filename}`
-			// 					};
-			// 					dispatch.chat.currentAttachment(msg);
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// );
+		async openMenu(context, state) {
+			const currentUser = this.currentUser;
+			const options = {
+				title: 'Selecione...',
+				takePhotoButtonTitle: null,
+				chooseFromLibraryButtonTitle: 'Fotos',
+				storageOptions: {
+					skipBackup: true,
+					path: 'images'
+				}
+			};
+			try {
+				ImagePicker.launchImageLibrary(options, async response => {
+					console.log(response);
+					if (response.didCancel) {
+						console.log('User cancelled image picker');
+					} else if (response.error) {
+						console.log('ImagePicker Error: ', response.error);
+					} else {
+						const source = { uri: response.uri };
+						const imageCompress = await ImageResizer.createResizedImage(
+							response.uri,
+							300,
+							400,
+							'PNG',
+							0
+						);
+						const msg = {
+							file: {
+								name: imageCompress.name,
+								type: 'image/jpg',
+								uri: imageCompress.uri
+							},
+							name: imageCompress.name
+						};
+						dispatch.chat.loadingMessage(true);
+						await this.currentUser.sendMessage({
+							roomId: state.chat.channel.toString(),
+							text: 'imagem',
+							attachment: msg
+						});
+						dispatch.chat.loadingMessage(false);
+					}
+				});
+			} catch (e) {
+				console.log(e);
+			}
 		},
 		onCleanAttachment() {
 			dispatch.chat.currentAttachment(null);

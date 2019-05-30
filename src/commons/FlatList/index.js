@@ -1,7 +1,7 @@
 import React from 'react';
-import {omit, debounce} from 'lodash';
-import styled, {css} from 'styled-components/native';
-import {array, bool, func} from 'prop-types';
+import { omit, debounce } from 'lodash';
+import styled, { css } from 'styled-components/native';
+import { array, bool, func } from 'prop-types';
 import {
   FlatList as NativeFlatList,
   RefreshControl,
@@ -21,7 +21,7 @@ import {
 } from 'recompose';
 
 // Locals
-import {theme} from '~/config';
+import { theme } from '~/config';
 
 export const FlatList = styled(
   compose(
@@ -37,12 +37,12 @@ export const FlatList = styled(
       showsVerticalScrollIndicator: false,
       showsHorizontalScrollIndicator: false,
       removeClippedSubviews: true,
-      onEndReachedThreshold: Platform.select({ios: 0, android: 0.5}),
+      onEndReachedThreshold: Platform.select({ ios: 0, android: 0.5 }),
       refreshing: false,
       loading: false,
       endRendering: false
     }),
-    withProps(({onEndReached}) => ({
+    withProps(({ onEndReached }) => ({
       onEndReached: debounce(e => {
         if (typeof onEndReached === 'function') {
           onEndReached(e);
@@ -50,15 +50,21 @@ export const FlatList = styled(
       }, 800)
     })),
     branch(
-      ({loading}) => loading,
-      renderComponent(({loading}) => <View loading={loading} />)
+      ({ loading }) => loading,
+      renderComponent(({ loading }) => {
+        return (
+          <View style={{ paddingVertical: 10 }}>
+            <ActivityIndicator size="small" />
+          </View>
+        );
+      })
     ),
     onlyUpdateForKeys(['data']),
     withHandlers({
-      renderFooter: ({endRendering}) => () => {
+      renderFooter: ({ endRendering }) => () => {
         if (endRendering) return null;
         return (
-          <View style={{paddingVertical: 10}}>
+          <View style={{ paddingVertical: 10 }}>
             <ActivityIndicator size="small" />
           </View>
         );

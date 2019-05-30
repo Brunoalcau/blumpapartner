@@ -1,10 +1,10 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
-import {Footer as FooterNative} from 'native-base';
-import {func, string} from 'prop-types';
+import styled, { css } from 'styled-components';
+import { Footer as FooterNative } from 'native-base';
+import { func, string } from 'prop-types';
 // Locals
-import {Button as ButtonNative} from '../Button';
-import {Text} from '../Text';
+import { Button as ButtonNative } from '../Button';
+import { Text } from '../Text';
 
 export const FooterButton = ({
   onPress,
@@ -28,7 +28,8 @@ const Button = styled(ButtonNative)`
   width: 100%;
 `;
 const Footer = styled(FooterNative)`
-  border-top-width: 0;
+  border-top-width: 0.5;
+  border-color: ${props => props.theme.border};
   height: 75;
   background-color: ${props => props.theme.secondary};
   padding-top: 15;

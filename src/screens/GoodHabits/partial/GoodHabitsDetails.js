@@ -13,9 +13,9 @@ import {
   TopBar,
   BackButton
 } from '~/commons';
-import {Item} from './Item';
+import { Item } from './Item';
 
-import {Search} from './Search';
+import { Search } from './Search';
 
 const initState = Immutable({
   value: '',
@@ -25,7 +25,7 @@ const initState = Immutable({
 const model = {
   state: initState,
   reducers: {
-    onChange(state, {value, items}) {
+    onChange(state, { value, items }) {
       return state.merge({
         value,
         items
@@ -75,14 +75,12 @@ export const GoodHabitsDetails = withRematch(model)(props => (
           ? props.state.items
           : props.navigation.state.params.item.articles
       }
-      renderItem={({item}) => {
+      renderItem={({ item }) => {
         return <Item item={item} routeName="Post" />;
       }}
     />
   </Wrapper>
 ));
-
-const WrapperImage = styled.View``;
 
 const Separator = styled.View`
   height: 0.5;

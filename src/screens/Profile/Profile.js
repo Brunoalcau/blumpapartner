@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, bool } from 'prop-types';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Thumbnail } from 'native-base';
 // locals
 import { images } from '~/config';
 import {
@@ -9,7 +10,6 @@ import {
   TopBar,
   BackButton,
   Text,
-  Image as ImageNative,
   ScrollWrapper as ScrollWrapperNative
 } from '~/commons';
 
@@ -24,10 +24,10 @@ export const Profile = ({ item, loading }) => (
               <ProfileStyled>
                 <Choose>
                   <When condition={item.avatar}>
-                    <Image uri={item.avatar} />
+                    <Image large uri={item.avatar} />
                   </When>
                   <Otherwise>
-                    <Image source={images.dayJob} />
+                    <Image large source={images.dayJob} />
                   </Otherwise>
                 </Choose>
               </ProfileStyled>
@@ -89,14 +89,9 @@ const WrapperImage = styled.View`
 const ContentImage = styled.View`
   border-radius: 50;
 `;
-const Image = styled(ImageNative)`
-  height: 120;
-  width: 120;
-  padding-left: 8;
-  border-radius: 60;
-  overflow: hidden;
-  border-width: 1;
-  border-color: ${props => props.theme['border']};
+const Image = styled(Thumbnail)`
+  justify-content: center;
+  align-items: center;
 `;
 
 const Wrapper = styled(WrapperNative)`
@@ -125,8 +120,4 @@ const InfoTab = styled.View`
   flex-direction: column;
 `;
 
-const ProfileStyled = styled.View`
-  height: 120;
-  width: 120;
-  border-radius: 60;
-`;
+const ProfileStyled = styled.View``;

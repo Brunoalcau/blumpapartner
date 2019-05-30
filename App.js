@@ -6,14 +6,16 @@ import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import 'moment/src/locale/pt';
 import { InteractionManager } from 'react-native';
+// import OneSignal from 'react-native-onesignal';
 // Locals
 import { setTopLevelNavigator, configurationGeoLocation } from '~/helpers';
 
 import { OffineNOtive } from './src/commons';
 import Provider from './src/Provider';
 import Routes from './src/Routes';
-import { registerInterceptors, addOneSignalEvents } from '~/config';
+import { registerInterceptors, configurationOneSignal } from '~/config';
 import store from './src/store';
+
 import {
   handleLocationUpdate,
   BACKGROUND_LOCATION_UPDATES_TASK,
@@ -31,6 +33,9 @@ export default class App extends React.Component {
     super();
     registerInterceptors();
     moment.locale('pt');
+    configurationOneSignal(store);
+
+    // OneSignal.init('36c3f82e-e32c-40ce-8864-bddb3405edc1');
   }
   async componentDidMount() {
     try {
@@ -42,7 +47,6 @@ export default class App extends React.Component {
     }
 
     // await Permissions.askAsync(Permissions.LOCATION);
-    // addOneSignalEvents(store);
   }
   render() {
     return (

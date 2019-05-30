@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'react-native-remote-svg';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, number } from 'prop-types';
 // Locals
 import {
   Wrapper,
@@ -12,8 +12,9 @@ import {
 } from '~/commons';
 import { MenuItem } from './partial/MenuItem';
 import { images } from '~/config';
-export const Menu = ({ roomId }) => (
+export const Menu = ({ channel }) => (
   <Wrapper>
+    {console.log('roomId', channel)}
     <TopBar title="Menu" />
     <ScrollWrapper>
       <MenuGroup>
@@ -31,7 +32,7 @@ export const Menu = ({ roomId }) => (
         <Label weight="bold" inverted size={12}>
           Dúvidas
         </Label>
-        <MenuItem icon="chatboxes" chat={roomId} routeName="Chat">
+        <MenuItem icon="chatboxes" chat={channel} routeName="Chat">
           Fale com o Blumpa
         </MenuItem>
         <MenuItem icon="list-box" routeName="GoodHabits">
@@ -48,7 +49,8 @@ export const Menu = ({ roomId }) => (
 );
 
 Menu.propTypes = {
-  user: string
+  user: string,
+  channel: number
 };
 Menu.navigationOptions = {
   header: null,

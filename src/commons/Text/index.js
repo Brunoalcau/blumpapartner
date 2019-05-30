@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export const Text = styled.Text.attrs(props => ({
   color: props.color || props.theme.text,
@@ -11,7 +11,6 @@ export const Text = styled.Text.attrs(props => ({
   font-size: ${props => props.size};
   font-weight: ${props => props.weight};
   text-align: ${props => props.align};
-
   ${props =>
     props.primary &&
     css`
@@ -25,10 +24,10 @@ export const Text = styled.Text.attrs(props => ({
     `}
 
     ${props =>
-    props.tertiary &&
-    css`
-      color: ${props => props.theme.tertiary};
-    `}
+      props.tertiary &&
+      css`
+        color: ${props => props.theme.tertiary};
+      `}
 
   ${props =>
     props.inverted &&
@@ -53,7 +52,11 @@ export const Text = styled.Text.attrs(props => ({
     css`
       color: ${props => props.theme.warning};
     `}
-
+  ${props =>
+    props.lineHeight &&
+    css`
+      line-height: ${props.lineHeight};
+    `};
   ${props =>
     props.disabled &&
     css`

@@ -5,9 +5,8 @@ import { omit } from 'lodash';
 import { AsyncStorage } from 'react-native';
 import { authenticationApi } from '~/api';
 // Locals
-import { apiUrl } from '~/config';
-import { storage } from '~/helpers';
-import { navigate, toast } from '~/helpers';
+import { apiUrl, registerOneSignal } from '~/config';
+import { storage, navigate, toast } from '~/helpers';
 
 const initialState = Immutable({
   isSignedIn: false,
@@ -41,7 +40,6 @@ const authentication = {
 
   effects: dispatch => ({
     async signin(user) {
-      console.log(user);
       try {
         const data = await authenticationApi.signin(user);
         dispatch.authentication.success(data);
@@ -77,6 +75,9 @@ const authentication = {
       latest: true,
       async process({ action }, dispatch, done) {
         const { access_token, uuid } = action.payload;
+
+        registerOneSignal(uuid);
+
         dispatch.application.setUser({ user: uuid, token: access_token });
         navigate('App');
         // TODO

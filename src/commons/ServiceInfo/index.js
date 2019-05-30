@@ -120,14 +120,11 @@ const WrapperInfo = styled.View`
   align-items: center;
   padding-top: 8;
   padding-bottom: 8;
-  flex-wrap: wrap;
 `;
 
 const Icon = styled(IconNative)`
   font-size: 27;
   color: ${props => props.theme.primary};
-  padding-right: 10;
-  width: 10%;
 `;
 
 const ButtonNextService = styled(Button)`
@@ -142,7 +139,8 @@ const Content = styled.View`
 `;
 
 const Label = styled(Text)`
-  width: 90%;
+  flex: 1;
+  flex-wrap: wrap;
 `;
 
 const Card = styled(CardNative)``;

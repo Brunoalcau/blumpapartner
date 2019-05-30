@@ -11,18 +11,17 @@ export const configurationGeoLocation = async store => {
 };
 
 const defaultProps = {
-	locationProvider: 0,
-	desiredAccuracy: 0,
-	stationaryRadius: 0,
-	distanceFilter: 0,
+	locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+	stationaryRadius: 1,
+	distanceFilter: 1,
 	debug: false,
 	startForeground: false,
 	stopOnStillActivity: false,
 	stopOnTerminate: true,
-	maxLocations: 1000,
-	url: '',
-	syncUrl: '',
-	syncThreshold: 100
+	maxLocations: 100,
+	activitiesInterval: 1000,
+	interval: 1000,
+	fastestInterval: 10000
 };
 
 const handlerLocation = location => {};
@@ -36,13 +35,13 @@ export const backgroundconfigureEvents = store => {
 			const serviceId = await AsyncStorage.getItem('serviceId');
 			await postLocation({ location, serviceId });
 			await onStopServiceIdNull();
-			BackgroundGeolocation.endTask(taskKey);
 		});
 	});
 
 	BackgroundGeolocation.on('stationary', location => {
 		console.log('[DEBUG] BackgroundGeolocation stationary', location);
 		BackgroundGeolocation.startTask(async taskKey => {
+			console.log(taskKey);
 			const serviceId = await AsyncStorage.getItem('serviceId');
 			await postLocation({ location, serviceId });
 			await onStopServiceIdNull();
@@ -70,9 +69,7 @@ export const backgroundconfigureEvents = store => {
 			'[INFO] BackgroundGeolocation auth status: ' + status.authorization
 		);
 
-		if (!status.isRunning) {
-			BackgroundGeolocation.start();
-		}
+		BackgroundGeolocation.start();
 	});
 };
 
@@ -100,6 +97,7 @@ const postLocation = async ({ location, serviceId }) => {
 
 const onStopServiceIdNull = async () => {
 	const serviceId = await AsyncStorage.getItem('serviceId');
+	console.log(serviceId);
 	if (!serviceId) {
 		backgroundStop();
 	}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, object } from 'prop-types';
+import { array, object, bool, func } from 'prop-types';
 // Locals
 import {
   Wrapper,
@@ -14,18 +14,28 @@ import {
 
 import { ItemAccordion } from './partial';
 
-export const Payment = ({ allIds, byId, stickyHeaderIndices }) => (
-  <Wrapper secondary>
+export const Payment = ({
+  allIds,
+  byId,
+  stickyHeaderIndices,
+  loading,
+  get,
+  payment
+}) => (
+  <Wrapper>
     <TopBar
       title="Pagamentos"
       leftComponent={<BackButton />}
       rightComponent={<FiltersButton routeName="FilterPayment" />}
     />
+    {console.log(loading)}
     <FlatList
       keyExtractor={(item, index) => {
         return index.toString();
       }}
-      ListEmptyComponent={<EmptyText>Nenhum serviços.</EmptyText>}
+      loading={loading}
+      onRefresh={() => get(payment)}
+      ListEmptyComponent={<EmptyText>Nenhum pagamento.</EmptyText>}
       data={allIds}
       stickyHeaderIndices={stickyHeaderIndices}
       renderItem={item => {
@@ -37,7 +47,10 @@ export const Payment = ({ allIds, byId, stickyHeaderIndices }) => (
 
 Payment.propTypes = {
   allIds: array,
-  object: object
+  object: object,
+  loading: bool,
+  get: func,
+  payment: object
 };
 
 Payment.navigationOptions = {

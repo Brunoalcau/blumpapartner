@@ -1,11 +1,11 @@
 import OneSignal from 'react-native-onesignal';
 
 // Locals
-import { apikeyOneSignal } from './variables';
+import { apiKeyOneSignal } from './variables';
 
-export const addOneSignalEvents = store => {
+export const configurationOneSignal = store => {
 	OneSignal.setLogLevel(6, 0);
-	OneSignal.init(apikeyOneSignal, { kOSSettingsKeyAutoPrompt: true });
+	OneSignal.init(apiKeyOneSignal, { kOSSettingsKeyAutoPrompt: true });
 	OneSignal.inFocusDisplaying(2);
 	OneSignal.setSubscription(true);
 	OneSignal.getPermissionSubscriptionState(status => {
@@ -28,8 +28,5 @@ export const removeOneSignalEvents = () => {
 };
 
 export const registerOneSignal = userId => {
-	// console.log(userId);
-	// OneSignal.setExternalUserId(userId);
-	// OneSignal.sendTag('userId', userId);
-	// OneSignal.tags({ : userId });
+	OneSignal.setExternalUserId(userId);
 };

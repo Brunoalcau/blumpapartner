@@ -58,7 +58,6 @@ const application = {
   effects: dispatch => ({
     loading() {},
     async confirmModalPermission() {
-      console.log('teste');
       const confitrm = requestAuthorizationGeoLocation();
       console.log(confitrm);
       // const { status, permissions } = await Permissions.askAsync(

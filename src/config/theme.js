@@ -20,7 +20,7 @@ export const theme = {
 export const images = {
   headset: require('../images/icons/headset.svg'),
   heart: require('../images/icons/solido-heart.svg'),
-  phone: require('../images/icons/phone.svg'),
+  phone: require('../images/phone.png'),
   leave: require('../images/icons/sair.svg'),
   schedule: require('../images/icons/solido-agendar.svg'),
   help: require('../images/icons/solido-ajuda.svg'),
@@ -37,9 +37,9 @@ export const images = {
   notification: require('../images/icons/solido-notification.svg'),
   productor: require('../images/icons/solido-produtos.svg'),
   clear: require('../images/5.svg'),
-  home: require('../images/2.svg'),
-  logo: require('../images/logo.svg'),
-  menssage: require('../images/phone.svg'),
+  home: require('../images/2.png'),
+  logo: require('../images/logo.png'),
+  menssage: require('../images/sms.png'),
   phoneSms: require('../images/5.svg'),
   dayJob: require('../images/1.png'),
   manual: require('../images/manual.png')

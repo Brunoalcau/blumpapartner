@@ -5,7 +5,7 @@ import { apiUrl } from '~/config';
 
 export const applicationApi = {
 	async getRoom() {
-		const { data } = await axios(`${apiUrl}v3/chatkit/get_room`);
+		const { data } = await axios(`${apiUrl}v3/chatkit/get_professional_room`);
 		return data;
 	}
 };

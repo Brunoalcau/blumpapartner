@@ -6,7 +6,8 @@ const mapStateToProps = ({ payment, filter }) => ({
   allIds: payment.allIds,
   byId: payment.byId,
   stickyHeaderIndices: payment.stickyHeaderIndices,
-  payment: filter.payment
+  payment: filter.payment,
+  loading: payment.loading
 });
 
 const mapDispatchToProps = ({ payment }) => ({

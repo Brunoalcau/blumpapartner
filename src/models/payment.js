@@ -8,7 +8,8 @@ import { paymentApi } from '~/api';
 const initialState = Immutable({
   byId: {},
   allIds: [],
-  stickyHeaderIndices: []
+  stickyHeaderIndices: [],
+  loading: false
 });
 
 const payment = {
@@ -18,6 +19,11 @@ const payment = {
     success(state, payload) {
       return state.merge({
         ...payload
+      });
+    },
+    setLoading(state, loading) {
+      return state.merge({
+        loading
       });
     },
     getError(state, payload) {
@@ -106,6 +112,15 @@ const payment = {
       type: 'payment/get',
       latest: true,
       process(contex, dispatch, done) {
+        dispatch.payment.setLoading(true);
+        done();
+      }
+    },
+    {
+      type: 'payment/success',
+      latest: true,
+      process(contex, dispatch, done) {
+        dispatch.payment.setLoading(false);
         done();
       }
     }

@@ -27,8 +27,6 @@ export const enhancer = compose(
 	lifecycle({
 		async componentDidMount() {
 			this.props.clearMessages();
-			// console.log(this.props);
-			console.log('this.props.playedId', this.props.playedId);
 			await this.props.initConfiguration({
 				user: this.props.user,
 				channel: this.props.navigation.getParam('channel')

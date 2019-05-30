@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'react-native-remote-svg';
 import { Footer } from 'native-base';
 import { Linking } from 'react-native';
 import { object } from 'prop-types';
 // Locals
-import { Wrapper, Button, Text, Icon } from '~/commons';
+import { Wrapper, Button, Text, Icon, Image } from '~/commons';
 import { images } from '~/config';
 
 export const Preview = ({ navigation }) => (
@@ -29,9 +28,8 @@ export const Preview = ({ navigation }) => (
           </Text>
         </ButtonPreview>
         <ButtonText transparent>
-          <Icon name="help" size={16} />
           <TextButton size={12} primary align="left">
-            Como é trabalhar com o Blumpa
+            Como é trabalhar com o Blumpa ?
           </TextButton>
         </ButtonText>
       </WrapperButton>
@@ -48,7 +46,7 @@ Preview.navigationOptions = {
 };
 
 const ImageHome = styled(Image)`
-  width: 300;
+  width: 100%;
   height: 300;
   flex: 1;
 `;
@@ -79,11 +77,12 @@ const ButtonPreview = styled(Button)`
 `;
 const ButtonText = styled(ButtonPreview)`
   text-align: left;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   position: absolute;
   width: 100%;
   bottom: 0;
+  flex: 1;
 `;
 
 const TextButton = styled(Text)`

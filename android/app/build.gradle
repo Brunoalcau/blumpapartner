@@ -107,6 +107,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     splits {
         abi {
@@ -138,6 +139,12 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-splash-screen')
+    implementation project(':react-native-image-resizer')
+    implementation project(':react-native-svg')
+    implementation project(':@mauron85_react-native-background-geolocation')
+    implementation project(':react-native-onesignal')
+    implementation project(':react-native-image-picker')
     implementation project(':react-native-background-task')
     implementation project(':react-native-background-fetch')
     implementation project(':react-native-webview')
