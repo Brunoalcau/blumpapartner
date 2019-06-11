@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Footer } from 'native-base';
-import { Linking } from 'react-native';
-import { object } from 'prop-types';
+import React from "react";
+import styled from "styled-components";
+import { Footer } from "native-base";
+import { Linking } from "react-native";
+import { object } from "prop-types";
 // Locals
-import { Wrapper, Button, Text, Icon, Image } from '~/commons';
-import { images } from '~/config';
+import { Wrapper, Button, Text, Icon, Image } from "~/commons";
+import { images } from "~/config";
 
 export const Preview = ({ navigation }) => (
   <WrapperPreview>
@@ -17,7 +17,7 @@ export const Preview = ({ navigation }) => (
         <ButtonPreview
           primary
           onPress={() => {
-            navigation.navigate({ routeName: 'Login' });
+            navigation.navigate({ routeName: "Login" });
           }}
         >
           <Text weight="500">Sou cadastrada</Text>

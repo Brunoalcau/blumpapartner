@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import { Formik } from 'formik';
-import * as yup from 'yup';
-import { get } from 'lodash';
+import React from "react";
+import styled from "styled-components/native";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { get } from "lodash";
 import {
   ScrollView as ScrollViewNative,
   KeyboardAvoidingView
-} from 'react-native';
-import { func, bool, object } from 'prop-types';
+} from "react-native";
+import { func, bool, object } from "prop-types";
 // import { Content, Container } from 'native-base';
-import { Content, Container, Form } from 'native-base';
+import { Content, Container, Form } from "native-base";
 // Locals
 import {
   InputField,
@@ -20,27 +20,27 @@ import {
   Button,
   Text,
   Image
-} from '~/commons';
-import { images } from '~/config';
+} from "~/commons";
+import { images } from "~/config";
 
 // console.log(Logo);
 const LoginSchema = yup.object().shape({
-  login: yup.string().required('Required'),
-  password: yup.string().required('Required')
+  login: yup.string().required("Required"),
+  password: yup.string().required("Required")
 });
 
 const getFieldError = (touched, errors, field) => {
   return get(touched, field) && get(errors, field);
 };
 
-export const Login = ({ signin, isSignedIn, navigation }) => {
+export const Login = ({ signin, isSignedIn, navigation, loading }) => {
   return (
     <Container>
       <StatusBarBackground />
       <Formik
         initialValues={{
-          login: '',
-          password: ''
+          login: "",
+          password: ""
         }}
         onSubmit={signin}
         validationSchema={LoginSchema}
@@ -65,49 +65,49 @@ export const Login = ({ signin, isSignedIn, navigation }) => {
                   <FormStyled>
                     <Form>
                       <InputField
-                        returnKeyType={'next'}
+                        returnKeyType={"next"}
                         label="Telefone"
                         type="cel-phone"
                         options={{
-                          maskType: 'BRL',
+                          maskType: "BRL",
                           withDDD: true,
-                          dddMask: '(99) '
+                          dddMask: "(99) "
                         }}
                         secureTextEntry={false}
-                        onChangeText={text => setFieldValue('login', text)}
-                        handleBlur={() => setFieldTouched('login')}
+                        onChangeText={text => setFieldValue("login", text)}
+                        handleBlur={() => setFieldTouched("login")}
                         value={values.login}
                         validationMessage={getFieldError(
                           touched,
                           errors,
-                          'login'
+                          "login"
                         )}
                       />
                       <InputField
                         label="Senha"
                         type="text"
                         secureTextEntry={true}
-                        onChangeText={text => setFieldValue('password', text)}
-                        handleBlur={() => setFieldTouched('password')}
+                        onChangeText={text => setFieldValue("password", text)}
+                        handleBlur={() => setFieldTouched("password")}
                         value={values.password}
                         validationMessage={getFieldError(
                           touched,
                           errors,
-                          'password'
+                          "password"
                         )}
                       />
                     </Form>
                     <ButtonText
                       transparent
                       onPress={() =>
-                        navigation.navigate({ routeName: 'ForgetPassword' })
+                        navigation.navigate({ routeName: "ForgetPassword" })
                       }
                     >
                       <Text size={12} primary align="left">
                         Não lembro minha senha
                       </Text>
                     </ButtonText>
-                    <Button primary onPress={submitForm}>
+                    <Button loading={loading} primary onPress={submitForm}>
                       <Text>Entrar</Text>
                     </Button>
                   </FormStyled>
@@ -131,7 +131,8 @@ Login.navigationOptions = {
 Login.propTypes = {
   signin: func,
   isSignedIn: bool,
-  navigation: object
+  navigation: object,
+  loading: bool
 };
 
 // const Content = styled.View``;

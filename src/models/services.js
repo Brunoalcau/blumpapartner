@@ -20,6 +20,7 @@ import {
 const initialState = Immutable({
   items: [],
   loading: false,
+  error: null,
   confirmModalServiceOpened: false,
   selectService: null,
   acceptSuccess: null,
@@ -40,7 +41,8 @@ const services = {
   reducers: {
     success(state, payload) {
       return state.merge({
-        items: payload
+        items: payload,
+        error: null
       });
     },
     acceptSuccess(state, payload) {
@@ -85,6 +87,11 @@ const services = {
       return state.merge({
         checkoutSuccess: null
       });
+    },
+    setError(state, payload) {
+      return state.merge({
+        error: payload
+      });
     }
   },
   effects: dispatch => ({
@@ -114,7 +121,7 @@ const services = {
             : servicesList
         );
       } catch (e) {
-        console.log(e);
+        dispatch.services.setError(e);
         toast.show({
           text: 'Ocorreu algum problema tente novamente',
           type: 'danger'
@@ -203,7 +210,7 @@ const services = {
       }
     },
     {
-      type: ['services/success', 'services/failed'],
+      type: ['services/success', 'services/failed', 'services/setError'],
       latest: true,
       process(context, dispatch, done) {
         dispatch.services.loading(false);

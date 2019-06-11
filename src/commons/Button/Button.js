@@ -1,13 +1,33 @@
-import React from 'react';
-import styled, { css } from 'styled-components/native';
-import { isNumber } from 'lodash';
-import { compose, withProps, pure } from 'recompose';
-import { TouchableOpacity } from 'react-native';
+import React from "react";
+import styled, { css } from "styled-components/native";
+import { isNumber } from "lodash";
+import { compose, withProps, pure } from "recompose";
+import { TouchableOpacity, ActivityIndicator } from "react-native";
+
+// Locals
+import { theme } from "~/config";
+function renderIndicator({ loading, activityIndicatorColor }) {
+  if (loading) {
+    return (
+      <ActivityIndicatorStyled
+        color={activityIndicatorColor || theme["text"]}
+      />
+    );
+  }
+  return null;
+}
+
+function renderChildren({ loading, children }) {
+  if (!loading) {
+    return children;
+  }
+  return null;
+}
 
 const enhancedButton = compose(
   withProps(({ onPress }) => ({
     onPress: e => {
-      if (typeof onPress === 'function') {
+      if (typeof onPress === "function") {
         requestAnimationFrame(() => {
           onPress(e);
         });
@@ -16,11 +36,16 @@ const enhancedButton = compose(
   })),
   pure
 )(props => {
-  return <TouchableOpacity {...props} />;
+  return (
+    <TouchableOpacity {...props}>
+      {renderIndicator(props)}
+      {renderChildren(props)}
+    </TouchableOpacity>
+  );
 });
 
 export const Button = styled(enhancedButton)`
-  background: ${props => props.background || 'rgba(0,0,0,0)'};
+  background: ${props => props.background || "rgba(0,0,0,0)"};
   border-radius: ${props =>
     isNumber(props.borderRadius)
       ? props.borderRadius
@@ -75,4 +100,7 @@ export const Button = styled(enhancedButton)`
       css`
         background: ${props => props.theme.primary};
       `}
+`;
+const ActivityIndicatorStyled = styled(ActivityIndicator)`
+  height: 18;
 `;

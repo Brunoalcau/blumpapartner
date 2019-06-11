@@ -1,7 +1,7 @@
-import React from 'react';
-import Image from 'react-native-remote-svg';
-import styled from 'styled-components';
-import { string, number } from 'prop-types';
+import React from "react";
+import Image from "react-native-remote-svg";
+import styled from "styled-components";
+import { string, number } from "prop-types";
 // Locals
 import {
   Wrapper,
@@ -9,12 +9,11 @@ import {
   TopBar,
   StatusBarBackground,
   Text
-} from '~/commons';
-import { MenuItem } from './partial/MenuItem';
-import { images } from '~/config';
+} from "~/commons";
+import { MenuItem } from "./partial/MenuItem";
+import { images } from "~/config";
 export const Menu = ({ channel }) => (
   <Wrapper>
-    {console.log('roomId', channel)}
     <TopBar title="Menu" />
     <ScrollWrapper>
       <MenuGroup>
@@ -54,7 +53,7 @@ Menu.propTypes = {
 };
 Menu.navigationOptions = {
   header: null,
-  title: 'Home Screen'
+  title: "Home Screen"
 };
 const MenuGroup = styled.View`
   margin-top: 10;

@@ -1,16 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import {Icon} from 'native-base';
-import {withNavigation} from 'react-navigation';
-import {number, object, string} from 'prop-types';
+import React from "react";
+import styled from "styled-components";
+import { Icon } from "native-base";
+import { withNavigation } from "react-navigation";
+import { number, object, string } from "prop-types";
 // Local
-import {NotificationButton} from '../NotificationButton';
+import { NotificationButton } from "../NotificationButton";
 
 export const FiltersButton = withNavigation(
-	({navigation, filterCount, routeName}) => (
+	({ navigation, filterCount, routeName }) => (
 		<NotificationButton
 			notifications={filterCount}
-			onPress={() => navigation.navigate({routeName: routeName})}
+			onPress={() => navigation.navigate({ routeName: routeName })}
 		>
 			<IconFilter name="ios-funnel" />
 		</NotificationButton>

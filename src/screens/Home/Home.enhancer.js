@@ -1,9 +1,10 @@
-import { compose, lifecycle } from 'recompose';
-import { connect } from 'react-redux';
+import { compose, lifecycle } from "recompose";
+import { connect } from "react-redux";
 
 const mapStateToProps = ({ next, application }) => ({
   item: next.item,
-  loading: next.loading
+  loading: next.loading,
+  error: next.error
 });
 
 const mapDispatchToProps = ({ next, services }) => ({

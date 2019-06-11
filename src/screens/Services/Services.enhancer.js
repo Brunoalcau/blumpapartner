@@ -8,7 +8,8 @@ const mapStateToProps = ({ services, application, filter }) => ({
   confirmModalServiceOpened: services.confirmModalServiceOpened,
   selectService: services.selectService,
   permissions: application.permissions,
-  fields: filter.fields
+  fields: filter.fields,
+  error: services.error
 });
 
 const mapDispatchToProps = ({ services, application }) => ({

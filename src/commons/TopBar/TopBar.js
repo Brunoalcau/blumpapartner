@@ -1,18 +1,18 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import { oneOfType, element, string, bool } from 'prop-types';
-import { compose, pure, setPropTypes, withProps } from 'recompose';
-import { isNumber } from 'lodash';
+import React from "react";
+import styled from "styled-components/native";
+import { oneOfType, element, string, bool } from "prop-types";
+import { compose, pure, setPropTypes, withProps } from "recompose";
+import { isNumber } from "lodash";
 import {
   Header as HeaderNative,
   Left as LeftNative,
   Body as BodyNative,
   Right as RightNative
-} from 'native-base';
+} from "native-base";
 
 // locals
-import { StatusBarBackground } from '../StatusBarBackground';
-import { Text } from '../Text';
+import { StatusBarBackground } from "../StatusBarBackground";
+import { Text } from "../Text";
 
 export const TopBar = compose(
   setPropTypes({
@@ -32,7 +32,9 @@ export const TopBar = compose(
         <When condition={leftComponent}>
           <Left>{leftComponent}</Left>
         </When>
-        <When condition={!leftComponent} />
+        <When condition={!leftComponent}>
+          <Left />
+        </When>
       </Choose>
       <Body>
         <Text weight="bold" align="center">
@@ -43,7 +45,9 @@ export const TopBar = compose(
         <When condition={rightComponent}>
           <Right>{rightComponent}</Right>
         </When>
-        <When condition={!rightComponent} />
+        <When condition={!rightComponent}>
+          <Right />
+        </When>
       </Choose>
     </Header>
   </MainWrapper>
@@ -57,7 +61,9 @@ const Header = styled(HeaderNative)`
   background-color: ${props => props.theme.bgSecondary};
 `;
 
-const Body = styled(BodyNative)``;
+const Body = styled(BodyNative)`
+  flex: 2;
+`;
 
 const Left = styled(LeftNative)`
   padding-left: 9;

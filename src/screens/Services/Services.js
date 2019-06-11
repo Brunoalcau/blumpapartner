@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import {array, bool, func, object} from 'prop-types';
-import {Text} from 'native-base';
+import React from "react";
+import styled from "styled-components/native";
+import { array, bool, func, object } from "prop-types";
+import { Text } from "native-base";
 // locals
 import {
   TopBar,
@@ -11,10 +11,11 @@ import {
   EmptyText,
   Modal,
   ConfirmModal,
-  FiltersButton
-} from '~/commons';
-import {ServiceCard} from './partial/ServiceCard';
-import {ConfirmModalService} from './partial/ConfirmModalService';
+  FiltersButton,
+  EmptyImage
+} from "~/commons";
+import { ServiceCard } from "./partial/ServiceCard";
+import { ConfirmModalService } from "./partial/ConfirmModalService";
 
 const Services = ({
   items,
@@ -25,7 +26,8 @@ const Services = ({
   selectService,
   selectedService,
   find,
-  permissions
+  permissions,
+  error
 }) => (
   <Wrapper>
     <TopBar
@@ -34,7 +36,10 @@ const Services = ({
     />
     <Content loading={loading}>
       <Choose>
-        <When condition={permissions.location}>
+        <When condition={error}>
+          <EmptyImage text={"Ocorreu um error ao listar. Tente mais tarde."} />
+        </When>
+        <When condition={permissions.location && !!error}>
           <FlatList
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={Separator}
@@ -42,22 +47,21 @@ const Services = ({
             onRefresh={find}
             ListEmptyComponent={<EmptyText>Nenhum serviços.</EmptyText>}
             data={items}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <ServiceCard
                 item={item}
                 onConfirm={() => {
-                  selectedService({item});
+                  selectedService({ item });
                   confirmModalServiceOpen(true);
                 }}
               />
             )}
           />
         </When>
-        <When condition={!permissions.location} />
       </Choose>
       <ConfirmModalService
         item={selectService}
-        onConfirm={() => accept({item: selectService})}
+        onConfirm={() => accept({ item: selectService })}
         visible={confirmModalServiceOpened}
         onCancel={() => confirmModalServiceOpen(false)}
       />
@@ -95,5 +99,5 @@ const Label = styled(Text)`
   color: ${props => props.theme.textSecondary};
 `;
 
-export {Services};
+export { Services };
 // const Card = styled.View``;

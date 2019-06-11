@@ -1,6 +1,6 @@
-import React from 'react';
-import {object, bool, func} from 'prop-types';
-import styled from 'styled-components';
+import React from "react";
+import { object, bool, func } from "prop-types";
+import styled from "styled-components";
 
 // Locals
 import {
@@ -9,12 +9,24 @@ import {
   ScrollWrapper,
   EmptyImage,
   ServiceInfo
-} from '~/commons';
-// import {NextService} from './partial/NextService';
+} from "~/commons";
+import { Refresh } from "./partial/Refresh";
+// import { Icon } from "~/commons";
 
-export const Home = ({item, loading, checkin, going, checkout}) => (
+export const Home = ({
+  item,
+  loading,
+  checkin,
+  going,
+  checkout,
+  get,
+  error
+}) => (
   <Wrapper>
-    <TopBar title="Próximo Serviços" />
+    <TopBar
+      title="Próximo Serviços"
+      rightComponent={<Refresh action={get} />}
+    />
     <Content loading={loading}>
       <Choose>
         <When condition={item}>
@@ -25,8 +37,11 @@ export const Home = ({item, loading, checkin, going, checkout}) => (
             checkout={checkout}
           />
         </When>
+        <When condition={error}>
+          <EmptyImage text={"Ocorreu um error ao listar. Tente mais tarde."} />
+        </When>
         <Otherwise>
-          <EmptyImage />
+          <EmptyImage text={"Você ainda não tem nenhum serviço agendado."} />
         </Otherwise>
       </Choose>
     </Content>
