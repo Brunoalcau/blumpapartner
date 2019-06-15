@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components/native";
-import { array, bool, func, object } from "prop-types";
-import { Text } from "native-base";
+import React from 'react';
+import styled from 'styled-components/native';
+import { array, bool, func, object } from 'prop-types';
+import { Text } from 'native-base';
 // locals
 import {
   TopBar,
@@ -13,9 +13,9 @@ import {
   ConfirmModal,
   FiltersButton,
   EmptyImage
-} from "~/commons";
-import { ServiceCard } from "./partial/ServiceCard";
-import { ConfirmModalService } from "./partial/ConfirmModalService";
+} from '~/commons';
+import { ServiceCard } from './partial/ServiceCard';
+import { ConfirmModalService } from './partial/ConfirmModalService';
 
 const Services = ({
   items,
@@ -37,9 +37,9 @@ const Services = ({
     <Content loading={loading}>
       <Choose>
         <When condition={error}>
-          <EmptyImage text={"Ocorreu um error ao listar. Tente mais tarde."} />
+          <EmptyImage text={'Ocorreu um error ao listar. Tente mais tarde.'} />
         </When>
-        <When condition={permissions.location && !!error}>
+        <When condition={permissions.location && items.length}>
           <FlatList
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={Separator}
