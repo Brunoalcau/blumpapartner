@@ -31,7 +31,6 @@ const application = {
       });
     },
     permissions(state, payload) {
-      console.log(payload);
       return state.merge({
         permissions: {
           location: payload

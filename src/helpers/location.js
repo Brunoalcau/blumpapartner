@@ -91,7 +91,7 @@ const postLocation = async ({ location, serviceId }) => {
 		const url = `https://blumpa-service.herokuapp.com/geo/${serviceId}`;
 		await axios.patch(url, location);
 	} catch (e) {
-		console.log(e);
+		// console.log(e);
 	}
 };
 

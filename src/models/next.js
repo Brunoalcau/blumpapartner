@@ -1,11 +1,11 @@
-import Immutable from "seamless-immutable";
-import axios from "axios";
-import { AsyncStorage } from "react-native";
-import moment from "moment";
-import { isEmpty } from "lodash";
+import Immutable from 'seamless-immutable';
+import axios from 'axios';
+import { AsyncStorage } from 'react-native';
+import moment from 'moment';
+import { isEmpty } from 'lodash';
 // Locals
-import { apiUrl } from "~/config";
-import { serviceApi, chatApi } from "~/api";
+import { apiUrl } from '~/config';
+import { serviceApi, chatApi } from '~/api';
 
 const initialState = Immutable({
 	item: null,
@@ -14,7 +14,7 @@ const initialState = Immutable({
 });
 
 const next = {
-	name: "next",
+	name: 'next',
 	state: initialState,
 	reducers: {
 		getSuccess(state, payload) {
@@ -39,7 +39,6 @@ const next = {
 			try {
 				const data = await serviceApi.next(state.application.user);
 				let room = null;
-				// console.log(data);
 				if (!isEmpty(data) && !data.room_id) {
 					room = await chatApi.create(data.id);
 				}
@@ -48,8 +47,8 @@ const next = {
 						id: data.id,
 						address: data.address.full_street_address,
 						scheduled: data.scheduled,
-						date: moment(data.start_time).format("DD/MM/YYYY HH:mm"),
-						hourState: moment(data.start_time).format("HH:mm"),
+						date: moment(data.start_time).format('DD/MM/YYYY HH:mm'),
+						hourState: moment(data.start_time).format('HH:mm'),
 						hours: data.hours,
 						note: data.note,
 						ironing: data.ironing,
@@ -71,19 +70,19 @@ const next = {
 	}),
 	logics: [
 		{
-			type: "next/getSuccess",
+			type: 'next/getSuccess',
 			latest: true,
 			async process({ action }, dispatch, done) {
 				const { payload } = action;
 				if (payload && payload.can_check_in) {
-					await AsyncStorage.setItem("serviceId", `${payload.id}`);
+					await AsyncStorage.setItem('serviceId', `${payload.id}`);
 				}
 				dispatch.next.loading(false);
 				done();
 			}
 		},
 		{
-			type: "next/get",
+			type: 'next/get',
 			latest: true,
 			process({ action }, dispatch, done) {
 				dispatch.next.loading(true);
@@ -91,7 +90,7 @@ const next = {
 			}
 		},
 		{
-			type: "next/getError",
+			type: 'next/getError',
 			latest: true,
 			process(context, dispatch, done) {
 				dispatch.next.loading(false);

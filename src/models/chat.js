@@ -152,7 +152,6 @@ const chat = {
 			};
 			try {
 				ImagePicker.launchImageLibrary(options, async response => {
-					console.log(response);
 					if (response.didCancel) {
 						console.log('User cancelled image picker');
 					} else if (response.error) {

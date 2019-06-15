@@ -22,17 +22,17 @@ export const enhancer = compose(
 	lifecycle({
 		async componentDidMount() {
 			try {
-				await this.props.getRoom();
-			} catch (e) {
-			} finally {
 				SplashScreen.hide();
 				const token = await AsyncStorage.getItem('userToken');
 				const user = await AsyncStorage.getItem('user');
 				registerOneSignal(user);
 				if (token) {
 					this.props.setUser({ token, user });
+					await this.props.getRoom();
 				}
 				this.props.navigation.navigate(token ? 'App' : 'Auth');
+			} catch (e) {
+				console.log(e);
 			}
 		}
 	})

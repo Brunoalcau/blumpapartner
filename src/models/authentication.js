@@ -14,12 +14,6 @@ const initialState = Immutable({
   loading: false,
   error: null
 });
-// const device = {
-//   os_type: Constants.platform[Platform.OS].platform,
-//   model: Constants.platform[Platform.OS].model,
-//   os_version: Constants.platform[Platform.OS].systemVersion
-// };
-
 const authentication = {
   name: 'authentication',
   state: initialState,

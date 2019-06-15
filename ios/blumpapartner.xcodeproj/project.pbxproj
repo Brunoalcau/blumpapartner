@@ -59,6 +59,7 @@
 		B112A711847F446DB4D64F26 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB64609221834A879A5FE57C /* libRNSVG.a */; };
 		B1137E5A2294EBB4001426F2 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A22D2228C0231004A57EC /* libRNImagePicker.a */; };
 		B1137F182295161B001426F2 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1137F17229513C2001426F2 /* libSplashScreen.a */; };
+		B19AD93222B53B6C0043B37C /* libRCTBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B151A2FA228CCDF600F575B6 /* libRCTBackgroundGeolocation.a */; };
 		B1A7FA1B228AE7610060F0D2 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A7FA1A228AE7580060F0D2 /* libRNCWebView.a */; };
 		B1A7FA22228AE9980060F0D2 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A7FA21228AE9900060F0D2 /* libReactNativePermissions.a */; };
 		B7E7BB8870BD43FCA0F7F25C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26FD576786434F13B5CEC3B0 /* Octicons.ttf */; };
@@ -519,6 +520,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B19AD93222B53B6C0043B37C /* libRCTBackgroundGeolocation.a in Frameworks */,
 				B1137F182295161B001426F2 /* libSplashScreen.a in Frameworks */,
 				B1137E5A2294EBB4001426F2 /* libRNImagePicker.a in Frameworks */,
 				B1A7FA22228AE9980060F0D2 /* libReactNativePermissions.a in Frameworks */,
